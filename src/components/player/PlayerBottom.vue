@@ -37,7 +37,15 @@ export default {
       'setIsPlaying'
     ]),
   },
- 
+  watch:{
+    isPlaying(newValue){
+      if(newValue){
+        this.$refs.play.classList.add('active');
+      }else{
+        this.$refs.play.classList.remove('active');
+      }
+    }
+  }
 
 }
 </script>

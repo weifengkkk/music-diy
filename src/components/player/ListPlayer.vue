@@ -16,7 +16,7 @@
           <ul>
             <li class="item">
               <div class="item-left">
-                <div class="item-play"></div>
+                <div class="item-play" ref="is"></div>
                 <p>演员</p>
               </div>
               <div class="item-right">
