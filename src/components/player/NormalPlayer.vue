@@ -6,8 +6,8 @@
   <PlayerMiddle></PlayerMiddle>
   <PlayerBottom></PlayerBottom>
   </div>
-  <div class="player-bg">
-    <img :src="currentSong.picUrl" alt="">
+  <div class="player-bg" >
+    <img :src="currentSong.picUrl" alt="" >
   </div>
 </div>
 </transition>
@@ -17,7 +17,7 @@
 import PlayerHeader from "./PlayerHeader";
 import PlayerMiddle from "./PlayerMiddle";
 import PlayerBottom from "./PlayerBottom";
-import { mapGetters } from 'vuex';
+import { mapGetters,mapActions } from 'vuex';
 import Velocity from 'velocity-animate'
 import 'velocity-animate/velocity.ui'
 export default {
@@ -27,13 +27,16 @@ export default {
     PlayerMiddle,
     PlayerBottom
   },
-  computed:{
+    computed:{
     ...mapGetters([
       'isFullScreen',
-      'currentSong'
+      'currentSong',
     ])
   },
   methods:{
+      ...mapActions([
+     'getSongLyric'
+   ]),
     enter(el,done){
       Velocity(this.$refs.normalPlayer, 'transition.shrinkIn', { duration: 500 },function(){
         done()
@@ -43,8 +46,19 @@ export default {
       Velocity(this.$refs.normalPlayer, 'transition.shrinkOut', { duration: 500 },function(){
         done()
       })
+    },
+ 
+  },
+
+
+    watch:{
+    currentSong(newValue){
+      if(newValue.id === undefined){
+        return 
+      }
+      this.getSongLyric(newValue.id)
     }
-  }
+  },
 }
 </script>
 

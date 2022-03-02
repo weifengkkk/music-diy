@@ -3,10 +3,10 @@
   <div class="mini-player" v-show="this.isShowMiniPlayer" ref="miniPlayer">
   <div class="player-wrapper">
   <div class="player-left" @click="showNormalPlayer"> 
-    <img src="https://img2.baidu.com/it/u=2909654508,3731451178&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=750" ref="cd" >
+    <img :src="currentSong.picUrl" alt="">
     <div class="player-title">
-      <h3>演员</h3>
-      <p>薛之谦</p>
+      <h3>{{currentSong.name}}</h3>
+      <p>{{currentSong.singer}}</p>
     </div>
   </div>
   <div class="player-right">
@@ -68,7 +68,8 @@ export default {
     ...mapGetters([
       'isShowMiniPlayer',
       'isPlaying',
-      'listPlayerShow'
+      'listPlayerShow',
+      'currentSong'
     ])
   }
 }
@@ -94,7 +95,7 @@ export default {
       display: flex;
      
       .player-title{
-        margin-left: 40px;
+        margin-left: 20px;
         display: flex;
         flex-direction: column;
         align-items: center;

@@ -1,7 +1,6 @@
 module.exports = {
     /* 部署应用包的基本URL, 不设置可能会出现打包后项目找不到资源问题 */
     publicPath: '/',
-
     
     configureWebpack: {
         module: {
@@ -22,7 +21,7 @@ module.exports = {
     devServer: {
         proxy: {  //配置跨域
           '/api': {
-            target: 'http://10.6.20.158:3000/',  
+            target: 'http://localhost:3000/',  
             changOrigin: true,  //允许跨域
             pathRewrite: {
              

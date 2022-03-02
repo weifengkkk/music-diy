@@ -16,19 +16,6 @@
       <div class="player-middle">
         <ScrollView>
           <ul>
-            <li class="item">
-              <div class="item-left">
-                <div class="item-play"  @click="play" ref="is"></div>
-                <p>演员</p>
-              </div>
-              <div class="item-right">
-                <div class="item-favorite">
-                </div>
-                <div class="item-del">
-                </div>
-              </div>
-
-            </li>
                 <li class="item">
               <div class="item-left">
                 <div class="item-play"  @click="play" ref="is"></div>

@@ -7,5 +7,6 @@ export default {
     listPlayerShow:false,
     songDetail:[],
     currentSong:{},
-    currentIndex:0
+    currentIndex:0,
+    currentLyric:{}
 }
