@@ -7,7 +7,7 @@
   <PlayerBottom></PlayerBottom>
   </div>
   <div class="player-bg">
-    <img src="https://img2.baidu.com/it/u=2909654508,3731451178&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=750" alt="">
+    <img :src="currentSong.picUrl" alt="">
   </div>
 </div>
 </transition>
@@ -29,7 +29,8 @@ export default {
   },
   computed:{
     ...mapGetters([
-      'isFullScreen'
+      'isFullScreen',
+      'currentSong'
     ])
   },
   methods:{

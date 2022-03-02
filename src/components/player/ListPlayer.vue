@@ -1,11 +1,13 @@
 <template>
 <transition @leave="leave" @enter="enter" @css="false" >
-  <div class="list-player" v-show="isShow" ref="listPlayer">
+  <div class="list-player" v-show="this.listPlayerShow" ref="listPlayer">
     <div class="player-wrapper">
       <div class="player-top">
         <div class="top-left">
-          <div class="mode"></div>
-          <p>顺序播放</p>
+          <div class="mode" @click="mode" ref="mode"></div>
+          <p v-if="this.modeType === 0">顺序循环</p>
+          <p v-else-if="this.modeType === 1">单曲循环</p>
+          <p v-else>随机循环</p>
         </div>
         <div class="top-right">
           <div class="del"></div>
@@ -15,6 +17,19 @@
         <ScrollView>
           <ul>
             <li class="item">
+              <div class="item-left">
+                <div class="item-play"  @click="play" ref="is"></div>
+                <p>演员</p>
+              </div>
+              <div class="item-right">
+                <div class="item-favorite">
+                </div>
+                <div class="item-del">
+                </div>
+              </div>
+
+            </li>
+                <li class="item">
               <div class="item-left">
                 <div class="item-play"  @click="play" ref="is"></div>
                 <p>演员</p>
@@ -42,44 +57,51 @@ import ScrollView from "@/components/ScrollView";
 import Velocity from 'velocity-animate'
 import 'velocity-animate/velocity.ui'
 import { mapActions, mapGetters } from 'vuex';
+import modeType from '../../store/modeType'
 export default {
   name: "ListPlayer",
   components:{
     ScrollView
   },
-  data:function (){
-    return{
-      isShow: false
-    }
-  },
+
     computed:{
     ...mapGetters([
-      'isPlaying'
-    ])
-  },
-  methods:{
-    show(){
-      this.isShow = true
+      'isPlaying',
+      'modeType',
+      'listPlayerShow'
+    ]),
     },
-    hidden(){
-      this.isShow = false
-    },
-  enter(el,done){
-    Velocity(this.$refs.listPlayer, 'transition.perspectiveUpIn', { duration: 500 },function(){
-      done()
-    })
-  },
-  leave(el,done){
-    Velocity(this.$refs.listPlayer, 'transition.perspectiveUpOut', { duration: 500 },function(){
-      done()
-    })
-  },
-  play(){
-    this.setIsPlaying(!this.isPlaying)
-  },
-  ...mapActions([
-    'setIsPlaying'
-  ]),
+    methods:{
+      enter(el,done){
+        Velocity(this.$refs.listPlayer, 'transition.perspectiveUpIn', { duration: 500 },function(){
+          done()
+        })
+      },
+      leave(el,done){
+        Velocity(this.$refs.listPlayer, 'transition.perspectiveUpOut', { duration: 500 },function(){
+          done()
+        })
+      },
+      play(){
+        this.setIsPlaying(!this.isPlaying)
+      },
+      hidden(){
+        this.setListPlayerShow(false)
+      },
+      mode(){
+      if(this.modeType === modeType.loop){
+            this.setModeType(modeType.one)
+          }else if(this.modeType === modeType.one){
+            this.setModeType(modeType.random)
+          }else if(this.modeType === modeType.random){
+            this.setModeType(modeType.loop)
+          }
+      },
+      ...mapActions([
+        'setIsPlaying',
+        'setModeType',
+        'setListPlayerShow'
+      ]),
   },
     watch:{
     isPlaying(newValue){
@@ -88,9 +110,21 @@ export default {
       }else{
         this.$refs.is.classList.remove('active')
       }
+    },
+      modeType(newValue){
+      if(newValue === modeType.one){
+        this.$refs.mode.classList.add('one')
+        this.$refs.mode.classList.remove('loop')
+      }else if(newValue === modeType.random){
+        this.$refs.mode.classList.add('random')
+        this.$refs.mode.classList.remove('one')
+      }else if(newValue === modeType.loop){
+        this.$refs.mode.classList.add('loop')
+        this.$refs.mode.classList.remove('random')
+      }
     }
-  },
-}
+  }
+    }
 </script>
 
 <style scoped lang="scss">
@@ -115,7 +149,16 @@ export default {
         .mode{
           width: 50px;
           height: 50px;
-          @include bg_img('../../assets/images/small_loop')
+          @include bg_img('../../assets/images/small_loop');
+          &.loop{
+          @include bg_img('../../assets/images/small_loop');
+          }
+          &.one{
+          @include bg_img('../../assets/images/small_one');
+          }
+          &.random{
+          @include bg_img('../../assets/images/small_shuffle');
+      }
         }
         p{
           margin-left: 20px;

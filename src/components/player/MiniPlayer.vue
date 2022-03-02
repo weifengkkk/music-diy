@@ -27,12 +27,13 @@ export default {
   name: "MiniPlayer",
   methods:{
     showList(){
-      this.$emit('showList')
+      this.setListPlayerShow(true)
     },
      ...mapActions([
     'setFullScreen',
     'setMiniPlayer',
-    'setIsPlaying'
+    'setIsPlaying',
+    'setListPlayerShow'
   ]),
   showNormalPlayer(){
     this.setFullScreen(true);
@@ -56,15 +57,18 @@ export default {
     isPlaying(newValue){
       if(newValue){
         this.$refs.play.classList.add('active');
+        this.$refs.cd.classList.add('active');
       }else{
         this.$refs.play.classList.remove('active');
+        this.$refs.cd.classList.remove('active');
       }
     }
   },
   computed:{
     ...mapGetters([
       'isShowMiniPlayer',
-      'isPlaying'
+      'isPlaying',
+      'listPlayerShow'
     ])
   }
 }
@@ -88,17 +92,9 @@ export default {
     height: 100%;
     .player-left{
       display: flex;
-      img{
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        animation: sport 15s linear infinite;
-        animation-play-state: running;
-        &.active{
-        animation-play-state: paused;
-      }
+     
       .player-title{
-        margin-left: 20px;
+        margin-left: 40px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -112,7 +108,18 @@ export default {
           @include font_size($font_medium_s);
           @include font_color();
         }
+     
       }
+         img{
+        width:  100px;
+        height: 100px;
+        border-radius: 50%;
+        animation: sport 15s linear infinite;
+        animation-play-state: running;
+        &.active{
+        animation-play-state: paused;
+        }
+        }
     }
     .player-right{
       display: flex;
@@ -132,7 +139,7 @@ export default {
       }
     }
   }
-
+}
  @keyframes sport{
    from{
      transform: rotate(0deg)
@@ -141,6 +148,4 @@ export default {
      transform: rotate(360deg)
    }
  }
-}
-}
 </style>

@@ -16,6 +16,7 @@ export default {
     NormalPlayer,
     ListPlayer
   },
+
   methods:{
     showList(){
       this.$refs.listPlayer.show()

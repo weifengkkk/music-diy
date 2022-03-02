@@ -2,7 +2,7 @@
   <swiper :options="swiperOptions" class="banner" >
     <swiper-slide class="item cd" >
       <div class="cd-wrapper" ref="cdwrapper">
-        <img src="https://img2.baidu.com/it/u=2909654508,3731451178&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=750" alt="">
+        <img :src="currentSong.picUrl" alt="">
       </div>
       <p>歌词部分</p>
     </swiper-slide>
@@ -79,7 +79,8 @@ export default {
   },
   computed:{
     ...mapGetters([
-      'isPlaying'
+      'isPlaying',
+      'currentSong'
     ])
   },
   watch:{

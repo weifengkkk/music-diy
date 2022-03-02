@@ -7,5 +7,25 @@ export default{
     },
     isPlaying(state){
         return state.isPlaying;
+    },
+    modeType(state){
+        return state.modeType;
+    },
+    listPlayerShow(state){
+        return state.listPlayerShow;
+    },
+    songDetail(state){
+        return state.songDetail
+    },
+    currentSong(state){
+        let obj = {
+            name: '',
+            singer: '',
+            picUrl: null
+        }
+        if(state.songDetail !== 0){
+            obj = state.songDetail[state.currentIndex]
+        }
+        return obj
     }
 }

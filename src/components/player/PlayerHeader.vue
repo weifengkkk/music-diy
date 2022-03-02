@@ -2,15 +2,15 @@
   <div class="header" >
     <div class="header-left" @click="hideNormalPlayer"></div>
     <div class="header-title">
-      <h3>演员</h3>
-      <p>薛之谦</p>
+      <h3>{{currentSong.name}}</h3>
+      <p>{{currentSong.singer}}</p>
     </div>
     <div class="header-right"></div>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 export default {
   name: "Header",
   data(){
@@ -18,6 +18,11 @@ export default {
       themes: ['theme','theme1','theme2'],
       index: 0
     }
+  },
+  computed:{
+    ...mapGetters([
+      'currentSong'
+    ])
   },
   methods:{
     changeTheme(){
