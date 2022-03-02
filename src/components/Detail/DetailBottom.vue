@@ -1,7 +1,7 @@
 <template>
   <ul class="detail-bottom" >
     <li class="detail-top">
-      <div class="bottom-icon"></div>
+      <div class="bottom-icon" @click="play" ref="play"></div>
       <div class="bottom-title">播放列表</div>
     </li>
     <li  v-for="value in playlist" :key="value.id"  class="item" @click="selectMusic">
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 export default {
   name: "DetailBottom",
   props:{
@@ -24,12 +24,29 @@ export default {
   },
   methods:{
     ...mapActions(
-      ['setFullScreen','setMiniPlayer']
+      ['setFullScreen','setMiniPlayer','setIsPlaying']
     ),
     selectMusic() {
       /* this.$store.dispatch('setFullScreen',true) */
       this.setFullScreen(true),
       this.setMiniPlayer(false)
+    },
+    play(){
+      this.setIsPlaying(!this.isPlaying)
+    }
+  },
+  computed:{
+    ...mapGetters([
+      'isPlaying'
+    ])
+  },
+  watch:{
+    isPlaying(newValue){
+      if(newValue){
+        this.$refs.play.classList.add('active')
+      }else{
+        this.$refs.play.classList.remove('active')
+      }
     }
   }
 }
@@ -57,7 +74,10 @@ export default {
   .bottom-icon{
     width: 60px;
     height: 60px;
-    @include bg_img('../../assets/images/small_pause')
+    @include bg_img('../../assets/images/small_pause');
+    &.active{
+      @include bg_img('../../assets/images/small_play');
+    }
   }
   .bottom-title{
     margin-left: 20px;

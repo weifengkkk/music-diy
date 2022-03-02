@@ -1,8 +1,8 @@
 <template>
   <swiper :options="swiperOptions" class="banner" >
-    <swiper-slide class="item cd">
-      <div class="cd-wrapper">
-        <img src="../../assets/images/list_qq.png" alt="">
+    <swiper-slide class="item cd" >
+      <div class="cd-wrapper" ref="cdwrapper">
+        <img src="https://img2.baidu.com/it/u=2909654508,3731451178&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=750" alt="">
       </div>
       <p>歌词部分</p>
     </swiper-slide>
@@ -42,22 +42,6 @@
           <li>我是31个li</li>
           <li>我是32个li</li>
           <li>我是33个li</li>
-          <li>我是34个li</li>
-          <li>我是35个li</li>
-          <li>我是36个li</li>
-          <li>我是37个li</li>
-          <li>我是38个li</li>
-          <li>我是39个li</li>
-          <li>我是40个li</li>
-          <li>我是41个li</li>
-          <li>我是42个li</li>
-          <li>我是43个li</li>
-          <li>我是44个li</li>
-          <li>我是45个li</li>
-          <li>我是46个li</li>
-          <li>我是47个li</li>
-          <li>我是48个li</li>
-          <li>我是49个li</li>
           <li>我是50个li</li>
         </ul>
       </ScrollView>
@@ -70,6 +54,7 @@
 import 'swiper/dist/css/swiper.css'
 import ScrollView from "@/components/ScrollView";
 import {swiper, swiperSlide} from 'vue-awesome-swiper'
+import { mapGetters } from 'vuex';
 export default {
   name: "PlayerMiddle",
   data() {
@@ -91,6 +76,20 @@ export default {
     swiper,
     swiperSlide,
     ScrollView
+  },
+  computed:{
+    ...mapGetters([
+      'isPlaying'
+    ])
+  },
+  watch:{
+    isPlaying(newValue){
+      if(newValue){
+        this.$refs.cdwrapper.classList.add('active')
+      }else{
+        this.$refs.cdwrapper.classList.remove('active')
+      }
+    }
   }
 }
 </script>
@@ -113,6 +112,11 @@ export default {
       border-radius: 50%;
       border: 30px solid #FFFFFF;
       overflow: hidden;
+      animation: sport 15s linear infinite;
+      animation-play-state: running;
+      &.active{
+      animation-play-state: paused;
+      }
       img{
         height: 100%;
         width: 100%;
@@ -136,6 +140,14 @@ export default {
     }
   }
 }
+ @keyframes sport{
+   from{
+     transform: rotate(0deg)
+   }
+   to{
+     transform: rotate(360deg)
+   }
+ }
 </style>
 <style lang="scss">
 @import "../../assets/css/mixin";

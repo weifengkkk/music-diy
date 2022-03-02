@@ -1,6 +1,6 @@
 <template>
   <div class="player-bottom">
-    <div class="bottom-progress">
+    <div class="bottom-progress" >
       <span>00:00</span>
       <div class="progress-bar">
         <div class="progress-line">
@@ -12,7 +12,7 @@
     <div class="bottom-controller">
       <div class="mode"></div>
       <div class="prev"></div>
-      <div class="play" ref="play" @click="play"></div>
+      <div class="play"  @click="play" ref="play"></div>
       <div class="next"></div>
       <div class="favorite"></div>
 
@@ -24,15 +24,20 @@
 import { mapActions, mapGetters } from 'vuex'
 export default {
   name: "PlayerBottom",
- 
+    
+  computed:{
+    ...mapGetters([
+      'isPlaying'
+    ])
+  },
   methods:{
+    play(){
+      this.setIsPlaying(!this.isPlaying)
+    },
     ...mapActions([
       'setIsPlaying'
     ]),
-    play(){
-        this.setIsPlaying(!this.isPlaying)
-    },
-  
+ 
   },
   watch:{
     isPlaying(newValue){
@@ -42,18 +47,13 @@ export default {
         this.$refs.play.classList.remove('active');
       }
     }
-  },
-   computed:{
-    ...mapGetters([
-      'isPlaying'
-    ])
-  },
-
+  }
 }
 </script>
 
 <style scoped lang="scss">
 @import "../../assets/css/mixin";
+@import "../../assets/css/variable";
 .player-bottom{
   position: fixed;
   left: 0;
@@ -74,18 +74,18 @@ export default {
       margin: 0 10px;
       height: 10px;
       background: white;
-      position: relative;
       .progress-line{
         width: 50%;
         height: 100%;
-        background: #cccccc;
+        background: #ccc;
+        position: relative;
         .progress-dot{
           width: 20px;
           height: 20px;
           border-radius: 50%;
           background: #fff;
           position: absolute;
-          left: 50%;
+          left: 100%;
           top: 50%;
           transform: translateY(-50%);
         }
@@ -109,7 +109,7 @@ export default {
     .prev{
       @include bg_img('../../assets/images/prev')
     }
-     .play{
+    .play{
         @include bg_img('../../assets/images/pause');
         &.active{
         @include bg_img('../../assets/images/play');

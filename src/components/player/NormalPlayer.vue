@@ -7,7 +7,7 @@
   <PlayerBottom></PlayerBottom>
   </div>
   <div class="player-bg">
-    <img src="../../assets/images/list_qq.png" alt="">
+    <img src="https://img2.baidu.com/it/u=2909654508,3731451178&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=750" alt="">
   </div>
 </div>
 </transition>
@@ -59,7 +59,8 @@ export default {
   .player-wrapper{
     width: 100%;
     height: 100%;
-
+    position: relative;
+    z-index: 999;
   }
   .player-bg{
     position: absolute;
