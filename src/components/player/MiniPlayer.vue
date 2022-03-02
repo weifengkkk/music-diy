@@ -3,7 +3,7 @@
   <div class="mini-player" v-show="this.isShowMiniPlayer" ref="miniPlayer">
   <div class="player-wrapper">
   <div class="player-left" @click="showNormalPlayer"> 
-    <img src="../../assets/images/list_qq.png" alt="" >
+    <img src="https://img2.baidu.com/it/u=2909654508,3731451178&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=750" ref="cd" >
     <div class="player-title">
       <h3>演员</h3>
       <p>薛之谦</p>
@@ -92,6 +92,10 @@ export default {
         width: 100px;
         height: 100px;
         border-radius: 50%;
+        animation: sport 15s linear infinite;
+        animation-play-state: running;
+        &.active{
+        animation-play-state: paused;
       }
       .player-title{
         margin-left: 20px;
@@ -129,5 +133,14 @@ export default {
     }
   }
 
+ @keyframes sport{
+   from{
+     transform: rotate(0deg)
+   }
+   to{
+     transform: rotate(360deg)
+   }
+ }
+}
 }
 </style>
