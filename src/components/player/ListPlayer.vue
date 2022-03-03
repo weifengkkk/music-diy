@@ -15,19 +15,18 @@
       </div>
       <div class="player-middle">
         <ScrollView>
-          <ul>
-                <li class="item" v-for="(value,index) in songDetail" :key="value.id">
+          <ul ref="play" >
+                <li class="item" v-for="(value,index) in songDetail" :key="value.id" @click="selectMusic(index)">
               <div class="item-left">
-                <div class="item-play"  @click="play" ref="is"></div>
+                <div class="item-play"  @click.stop="play" v-show="currentIndex === index"></div>
                 <p>{{value.name}}</p>
               </div>
               <div class="item-right">
                 <div class="item-favorite">
                 </div>
-                <div class="item-del" @click="del(index)">
+                <div class="item-del" @click.stop="del(index)">
                 </div>
               </div>
-
             </li>
           </ul>
         </ScrollView>
@@ -56,7 +55,8 @@ export default {
       'isPlaying',
       'modeType',
       'listPlayerShow',
-      'songDetail'
+      'songDetail',
+       'currentIndex',
     ]),
     },
     methods:{
@@ -75,6 +75,9 @@ export default {
       },
       hidden(){
         this.setListPlayerShow(false)
+      },
+      selectMusic(index){
+         this.setCurrentIndex(index)
       },
       mode(){
       if(this.modeType === modeType.loop){
@@ -95,15 +98,17 @@ export default {
         'setIsPlaying',
         'setModeType',
         'setListPlayerShow',
-        'setDelSong'
+        'setDelSong',
+        'setCurrentIndex'
+
       ]),
   },
     watch:{
     isPlaying(newValue){
       if(newValue){
-        this.$refs.is.classList.add('active')
+        this.$refs.play.classList.add('active')
       }else{
-        this.$refs.is.classList.remove('active')
+        this.$refs.play.classList.remove('active')
       }
     },
       modeType(newValue){
@@ -176,6 +181,16 @@ export default {
     }
     .player-middle{
       width: 100%;
+      overflow: hidden;
+      ul{
+        &.active{
+          .item{
+            .item-play{
+              @include bg_img('../../assets/images/small_play');
+            }
+          }
+        }
+      }
       .item{
         height: 100px;
         display: flex;
@@ -190,9 +205,7 @@ export default {
             width: 56px;
             height: 56px;
             @include bg_img('../../assets/images/small_pause');
-            &.active{
-              @include bg_img('../../assets/images/small_play');
-            }
+         
           }
           p{
             margin-left: 20px;

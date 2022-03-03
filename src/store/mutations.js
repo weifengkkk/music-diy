@@ -6,7 +6,8 @@ import{
     SET_LISTPLAYER_SHOW,
     SET_SONG_DETAIL,
     SET_SONG_LYRIC,
-    SET_DEL_SONG
+    SET_DEL_SONG,
+    SET_CURRENT_INDEX
 }from './mutations-type'
 
 
@@ -42,6 +43,13 @@ export default{
     },
     [SET_DEL_SONG](state,index){
         index === undefined ? state.songDetail = [] : state.songDetail.splice(index,1)
+        if(state.songDetail.length === 0){
+            state.isFullScreen = false
+            state.isShowMiniPlayer = false
+            state.listPlayerShow = false
+        }
+    },
+    [SET_CURRENT_INDEX](state,index){
+        state.currentIndex = index
     }
-    
 }

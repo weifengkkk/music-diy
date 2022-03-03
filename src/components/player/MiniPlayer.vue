@@ -116,9 +116,9 @@ export default {
         height: 100px;
         border-radius: 50%;
         animation: sport 15s linear infinite;
-        animation-play-state: running;
-        &.active{
         animation-play-state: paused;
+        &.active{
+        animation-play-state: running;
         }
         }
     }

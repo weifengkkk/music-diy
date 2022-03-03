@@ -33,5 +33,8 @@ export default{
     },
     currentLyric(state){
         return state.currentLyric
+    },
+    currentIndex(state){
+        return state.currentIndex
     }
 }
