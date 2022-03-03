@@ -10,21 +10,21 @@
           <p v-else>随机循环</p>
         </div>
         <div class="top-right">
-          <div class="del"></div>
+          <div class="del" @click="delAll"></div>
         </div>
       </div>
       <div class="player-middle">
         <ScrollView>
           <ul>
-                <li class="item">
+                <li class="item" v-for="(value,index) in songDetail" :key="value.id">
               <div class="item-left">
                 <div class="item-play"  @click="play" ref="is"></div>
-                <p>演员</p>
+                <p>{{value.name}}</p>
               </div>
               <div class="item-right">
                 <div class="item-favorite">
                 </div>
-                <div class="item-del">
+                <div class="item-del" @click="del(index)">
                 </div>
               </div>
 
@@ -55,7 +55,8 @@ export default {
     ...mapGetters([
       'isPlaying',
       'modeType',
-      'listPlayerShow'
+      'listPlayerShow',
+      'songDetail'
     ]),
     },
     methods:{
@@ -84,10 +85,17 @@ export default {
             this.setModeType(modeType.loop)
           }
       },
+      del(index){
+        this.setDelSong(index)
+      },
+      delAll(){
+        this.setDelSong()
+      },
       ...mapActions([
         'setIsPlaying',
         'setModeType',
-        'setListPlayerShow'
+        'setListPlayerShow',
+        'setDelSong'
       ]),
   },
     watch:{
@@ -108,6 +116,11 @@ export default {
       }else if(newValue === modeType.loop){
         this.$refs.mode.classList.add('loop')
         this.$refs.mode.classList.remove('random')
+      }
+    },
+    listPlayerShow(newValue){
+      if(newValue){
+        this.$refs.ScrollView.refresh()
       }
     }
   }

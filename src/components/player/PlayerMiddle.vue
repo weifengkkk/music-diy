@@ -4,45 +4,12 @@
       <div class="cd-wrapper" ref="cdwrapper">
         <img :src="currentSong.picUrl" alt="">
       </div>
-      <p>歌词部分</p>
+      <p>{{getFirstLyric()}}</p>
     </swiper-slide>
     <swiper-slide class="lyric">
       <ScrollView>
         <ul>
-          <li>我是1个li</li>
-          <li>我是2个li</li>
-          <li>我是3个li</li>
-          <li>我是4个li</li>
-          <li>我是5个li</li>
-          <li>我是6个li</li>
-          <li>我是7个li</li>
-          <li>我是8个li</li>
-          <li>我是9个li</li>
-          <li>我是10个li</li>
-          <li>我是11个li</li>
-          <li>我是12个li</li>
-          <li>我是13个li</li>
-          <li>我是14个li</li>
-          <li>我是15个li</li>
-          <li>我是16个li</li>
-          <li>我是17个li</li>
-          <li>我是18个li</li>
-          <li>我是19个li</li>
-          <li>我是20个li</li>
-          <li>我是21个li</li>
-          <li>我是22个li</li>
-          <li>我是23个li</li>
-          <li>我是24个li</li>
-          <li>我是25个li</li>
-          <li>我是26个li</li>
-          <li>我是27个li</li>
-          <li>我是28个li</li>
-          <li>我是29个li</li>
-          <li>我是30个li</li>
-          <li>我是31个li</li>
-          <li>我是32个li</li>
-          <li>我是33个li</li>
-          <li>我是50个li</li>
+          <li v-for="(value,index) in currentLyric" :key="index">{{value}}</li>
         </ul>
       </ScrollView>
     </swiper-slide>
@@ -80,7 +47,8 @@ export default {
   computed:{
     ...mapGetters([
       'isPlaying',
-      'currentSong'
+      'currentSong',
+      'currentLyric'
     ])
   },
   watch:{
@@ -89,6 +57,13 @@ export default {
         this.$refs.cdwrapper.classList.add('active')
       }else{
         this.$refs.cdwrapper.classList.remove('active')
+      }
+    }
+  },
+  methods:{
+    getFirstLyric(){
+      for(let key in this.currentLyric){
+        return this.currentLyric[key]
       }
     }
   }

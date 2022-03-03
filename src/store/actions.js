@@ -1,4 +1,4 @@
-import { getSongDetail } from '../api'
+import { getSongDetail, getSongUrl } from '../api'
 import { getSongLyric } from '../api'
 import{
     SET_FULL_SCREEN,
@@ -7,7 +7,8 @@ import{
     SET_MODE_TYPE,
     SET_LISTPLAYER_SHOW,
     SET_SONG_DETAIL,
-    SET_SONG_LYRIC
+    SET_SONG_LYRIC,
+    SET_DEL_SONG
 }from './mutations-type'
 
 
@@ -27,11 +28,17 @@ export default{
     setListPlayerShow({commit},flag){
         commit(SET_LISTPLAYER_SHOW,flag)
     },
+    setDelSong({commit},flag){
+        commit(SET_DEL_SONG,flag)
+    }
+    ,
     async setSongDetail({commit},ids){
         let result = await getSongDetail({ids: ids.join(',')})
+        let urls = await getSongUrl({id:ids.join(',')})
         let list = []
-        result.songs.forEach((value) => {
+        result.songs.forEach((value,i) => {
             let obj = {}
+            obj.url = urls.data[i].url
             obj.name = value.name
             let singer = ''
             let picUrl = ''
@@ -45,7 +52,7 @@ export default{
             picUrl = value['al'].picUrl
             obj.singer = singer
             obj.picUrl = picUrl
-            obj.id = value
+            obj.id = value.id
             list.push(obj)
         })
 

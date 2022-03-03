@@ -22,10 +22,13 @@ export default{
             name: '',
             singer: '',
             picUrl: null,
+            id: null,
+            url: null
         }
         if(state.songDetail !== 0){
             obj = state.songDetail[state.currentIndex]
         }
+
         return obj
     },
     currentLyric(state){

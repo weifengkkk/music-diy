@@ -1,8 +1,8 @@
 <template>
   <ul class="detail-bottom" >
-    <li class="detail-top">
-      <div class="bottom-icon" @click="play" ref="play"></div>
-      <div class="bottom-title">播放列表</div>
+    <li class="detail-top" @click="playAllMusic">
+      <div class="bottom-icon"  ref="play" ></div>
+      <div class="bottom-title" >播放全部</div>
     </li>
     <li  v-for="value in playlist" :key="value.id"  class="item" @click="selectMusic(value.id)">
       <h3>{{value.name}}</h3>
@@ -24,16 +24,23 @@ export default {
   },
   methods:{
     ...mapActions(
-      ['setFullScreen','setMiniPlayer','setIsPlaying','setSongDetail']
+      ['setFullScreen','setMiniPlayer','setIsPlaying','setSongDetail','setMiniPlayer']
     ),
     selectMusic(id) {
       /* this.$store.dispatch('setFullScreen',true) */
-      this.setFullScreen(true),
+      this.setFullScreen(true)
       this.setMiniPlayer(false)
       this.setSongDetail([id])
     },
-    play(){
+
+    playAllMusic(){
       this.setIsPlaying(!this.isPlaying)
+      this.setFullScreen(true)
+      let ids = this.playlist.map((item)=>{
+        return item.id
+      })
+      this.setSongDetail([ids])
+
     }
   },
   computed:{
@@ -49,6 +56,7 @@ export default {
       }else{
         this.$refs.play.classList.remove('active')
       }
+
     }
   }
 }

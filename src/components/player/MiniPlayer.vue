@@ -1,9 +1,9 @@
 <template>
 <transition @leave="leave" @enter="enter" @css="false">
   <div class="mini-player" v-show="this.isShowMiniPlayer" ref="miniPlayer">
-  <div class="player-wrapper">
-  <div class="player-left" @click="showNormalPlayer"> 
-    <img :src="currentSong.picUrl" alt="">
+  <div class="player-wrapper" >
+  <div class="player-left" @click="showNormalPlayer" > 
+    <img :src="currentSong.picUrl" alt="" ref="cd">
     <div class="player-title">
       <h3>{{currentSong.name}}</h3>
       <p>{{currentSong.singer}}</p>
