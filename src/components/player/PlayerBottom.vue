@@ -1,19 +1,19 @@
 <template>
   <div class="player-bottom">
     <div class="bottom-progress" >
-      <span>00:00</span>
+      <span ref="eleCurrentTime">00:00</span>
       <div class="progress-bar">
         <div class="progress-line">
           <div class="progress-dot"></div>
         </div>
       </div>
-      <span>00:00</span>
+      <span ref="eleTotalTime">00:00</span>
     </div>
     <div class="bottom-controller">
       <div class="mode" @click="mode" ref="mode"></div>
-      <div class="prev"></div>
+      <div class="prev" @click="prev"></div>
       <div class="play"  @click="play" ref="play"></div>
-      <div class="next"></div>
+      <div class="next" @click="next"></div>
       <div class="favorite"></div>
 
     </div>
@@ -23,18 +23,37 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import modeType from '../../store/modeType'
+import { formatTime } from '../../tool/tools'
 export default {
   name: "PlayerBottom",
-    
+    props:{
+    totalTime:{
+      type: Number,
+      default: 0,
+      required: true
+    },
+    currentTime:{
+      type: Number,
+      default: 0,
+      required: true
+    }
+  },
   computed:{
     ...mapGetters([
       'isPlaying',
-      'modeType'
+      'modeType',
+      'currentIndex'
     ])
   },
   methods:{
     play(){
       this.setIsPlaying(!this.isPlaying)
+    },
+    prev(){
+       this.setCurrentIndex(this.currentIndex-1)
+    },
+    next(){
+      this.setCurrentIndex(this.currentIndex+1)
     },
     mode(){
       if(this.modeType === modeType.loop){
@@ -45,9 +64,11 @@ export default {
         this.setModeType(modeType.loop)
       }
     },
+
     ...mapActions([
       'setIsPlaying',
-      'setModeType'
+      'setModeType',
+      'setCurrentIndex'
     ]),
  
   },
@@ -70,6 +91,15 @@ export default {
         this.$refs.mode.classList.add('loop')
         this.$refs.mode.classList.remove('random')
       }
+    },
+    totalTime(newValue){
+      let time = formatTime(newValue)
+      this.$refs.eleTotalTime.innerHTML = time.minute + ':' +   time.second
+    },
+    currentTime(newValue){
+      let time = formatTime(newValue)
+      this.$refs.eleCurrentTime.innerHTML = time.minute + ':' +   time.second
+
     }
   }
 }

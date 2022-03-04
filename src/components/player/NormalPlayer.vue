@@ -4,7 +4,7 @@
   <div class="player-wrapper">
   <PlayerHeader></PlayerHeader>
   <PlayerMiddle></PlayerMiddle>
-  <PlayerBottom></PlayerBottom>
+  <PlayerBottom :totalTime="totalTime" :currentTime="currentTime"></PlayerBottom>
   </div>
   <div class="player-bg" >
     <img :src="currentSong.picUrl" alt="" >
@@ -26,6 +26,18 @@ export default {
     PlayerHeader,
     PlayerMiddle,
     PlayerBottom
+  },
+  props:{
+    totalTime:{
+      type: Number,
+      default: 0,
+      required: true
+    },
+    currentTime:{
+      type: Number,
+      default: 0,
+      required: true
+    }
   },
     computed:{
     ...mapGetters([

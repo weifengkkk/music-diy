@@ -42,7 +42,8 @@ export default{
         state.currentLyric = lyric
     },
     [SET_DEL_SONG](state,index){
-        index === undefined ? state.songDetail = [] : state.songDetail.splice(index,1)
+        index === undefined ? state.songDetail = [] : state.songDetail.splice(index,1) 
+        if(state.currentIndex > index) state.currentIndex -= 1
         if(state.songDetail.length === 0){
             state.isFullScreen = false
             state.isShowMiniPlayer = false
@@ -50,6 +51,11 @@ export default{
         }
     },
     [SET_CURRENT_INDEX](state,index){
-        state.currentIndex = index
+        if(index < 0){
+            index = state.songDetail.length-1
+        }else if (index > state.songDetail.length-1){
+            index = 0
+        }
+            state.currentIndex = index
     }
 }

@@ -8,7 +8,8 @@ import{
     SET_LISTPLAYER_SHOW,
     SET_SONG_DETAIL,
     SET_SONG_LYRIC,
-    SET_DEL_SONG
+    SET_DEL_SONG,
+    SET_CURRENT_INDEX
 }from './mutations-type'
 
 
@@ -30,8 +31,10 @@ export default{
     },
     setDelSong({commit},flag){
         commit(SET_DEL_SONG,flag)
-    }
-    ,
+    },
+    setCurrentIndex({commit},flag){
+        commit(SET_CURRENT_INDEX,flag)
+    },
     async setSongDetail({commit},ids){
         let result = await getSongDetail({ids: ids.join(',')})
         let urls = await getSongUrl({id:ids.join(',')})

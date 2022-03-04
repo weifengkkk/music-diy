@@ -36,5 +36,8 @@ export default{
     },
     currentIndex(state){
         return state.currentIndex
+    },
+    curTime(state){
+        return state.curTime
     }
 }
